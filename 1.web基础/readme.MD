@@ -51,11 +51,120 @@
     MIME 类型是一种文本标记，表示一种主要的对象类型和一个特定的子类型，中间
 由一条斜杠来分隔。
 
--     HTML 格式的文本文档由 text/html 类型来标记。
--     普通的 ASCII 文本文档由 text/plain 类型来标记。
--     JPEG 版本的图片为 image/jpeg 类型。
--     GIF 格式的图片为 image/gif 类型。
--     Apple 的 QuickTime 电影为 video/quicktime 类型。
--     微软的 PowerPoint 演示文件为 application/vnd.ms-powerpoint 类型。
+    -     HTML 格式的文本文档由 text/html 类型来标记。
+    -     普通的 ASCII 文本文档由 text/plain 类型来标记。
+    -     JPEG 版本的图片为 image/jpeg 类型。
+    -     GIF 格式的图片为 image/gif 类型。
+    -     Apple 的 QuickTime 电影为 video/quicktime 类型。
+    -     微软的 PowerPoint 演示文件为 application/vnd.ms-powerpoint 类型。
     
     常见的 MIME 类型有数百个，实验性或用途有限的 MIME 类型则更多。MIME类型可以在Google Dev Tools中Network中的content-type中查看
+
+1. 资源定位符
+
+    - URI：每个Web服务器资源都有一个名字。服务器资源名称被称为URI（统一资源标识符，Uniform Resource Identifier,URI），包括URL和URN。
+    - URL：统一资源定位符，说明了协议、服务器和本地资源。URL描述了服务器上资源的特定位置，可以准确的从一个精确、固定位置获取资源
+        - URL第一部分称为方案（schema），说明了访问资源的协议类型。通常是http协议(http://)
+        - 第二部分提供了服务器的地址
+        - 其余部分指定服务器上的某个资源
+        目前为止，所有URI都是URL。
+    - URN：统一资源名，作为特定内容的唯一名称使用，与所在资源地址无关，这些资源可以被四处迁移。比如，不论因特尔标准文档RFC 2141位于何方，通可以用下列URN命名：urn:ietf:rfc:2141。目前仍然处于试验阶段。
+
+1. 事务
+ 
+    一个HTTP事务由一条请求命令和一个相应结果组成，这种通信通过为名HTTP报文的格式化数据块进行。
+
+1. 方法
+    
+    HTTP支持几种不同的请求命令，这些命令被称为HTTP方法（HTTP method）。常见的方法有：Get,Put,Delete,Post,Head,Petch,OPTIONS。具体信息查看restful.api
+
+1. 报文
+
+    http报文由一行行简单的字符串组成。
+    
+    -     起始行：报文第一行就是起始行，请求报文中说明要做什么（Method url Schema/version），相应报文中说明相应状况(Schema/version status)
+    -     头部字段：起始行后面有一行或者多行首部字段。每个首部字段包含一个名字和一个值，中间以:分隔。尾部以一个空行结束。
+    -     空行之后就是一个可选的报文主题数据。主题数据可以包含任意格式数据（包括二进制的音频，图片，视频，软件程序）。当然也可以包括文本。
+
+1. 头部信息
+    
+    -     请求头：accept(text/html,application/xhtml+xml),accept-language(zh-CN,zh;q=0.8,en;q=0.6),accept-encoding(gzip, deflate, sdch),user-agent(用户代理),cookie,host(请求服务器),cache-control(是否缓存),connection(keep-alive),Pragma(特定指令，比如no-cache)
+    -     响应头：data,server（apache,ngnix）,last-modified,content-length（长度）,content-type(类型)，Content-Encoding（gzip），cache-control(是否缓存),connection(keep-alive)，Set-Cookie
+    
+1. 连接
+    
+    传输协议控制（Transmission Control Protocol,TCP）。HTTP 无需操心网络通信细节，交给了通用可靠的传输协议TCP/IP，它提供了。
+
+    -     无差错的数据传输
+    -     按序传输（数据总是按照发送的顺序到达）
+    -     未分段的数据流（可以在任意时刻任何尺寸把数据发出去）
+    
+    因特网本身就是基于TCP/IP的，像全世界提供了计算机和网络设备常用的层次化分组交换网络协议集。隐藏了网络和硬件的弱点，使各种类型计算机和网络都能有效可靠的通信。
+    
+    只要建立TCP/IP连接，客户端和服务器的报文交换就不会丢失，不会被破坏，也不会再接收时候出现错序。
+    
+    HTTP-TCP-IP-网络特有链路接口-物理网络硬件
+    
+1.  我们来发一条请求
+
+    ```
+    telnet 127.0.0.1 3001
+    Trying 127.0.0.1...
+    Connected to localhost.
+    Escape character is '^]'.
+    GET / HTTP/1.1
+    
+    HTTP/1.1 200 OK
+    Content-Type: text/plain; charset=utf-8
+    Content-Length: 3
+    Date: Sun, 24 Apr 2016 04:37:18 GMT
+    Connection: keep-alive
+    
+    abc
+    ```
+    Telnet可以很好的模拟器HTTP客户端，但是不能作为服务器使用。如果想更灵活的工具，可以去看看NC（netcat）。通过nc可以很方便的操控基于UDP和TCP的流量（包括HTTP）。
+    
+1. 协议版本
+
+    - HTTP/0.9:HTTP的1991原型版本称为HTTP/0.9。这个协议有很多严重缺陷，只能用于老客户端的交互。只支持Get方法，不支持多媒体内容的mime类型,header,版本号。很快就被1.0取代。
+    
+    - HTTP/1.0:添加了版本号，header,一些额外的方法以及对多媒体对象处理。集合了一系列的最佳实践，得到广泛的应用。
+    
+    - HTTP/1.0+:90年代中叶，随着web客户端和服务器飞快奋战，添加了很多特性比如持久keep-alive连接，虚拟主机支持以及代理连接支持都被加入到HTTP之中。并非官方事实标准，非正式的HTTP扩展版本被称为HTTP/1.0+。
+    
+    - HTTP/1.1:重点关注校正HTTP设计的结构缺陷，语义明确，引入重要的性能优化措施以及删除不好的特性。是目前使用的HTTP版本
+    
+    - HTTP-NG（又名2.0）:HTTP-NG是HTTP/1.1后续结构的原型建议，重点关注的性能大幅优化，研究工作终止于1998年。
+
+1. Web结构组件
+
+    列出其他一些比较重要的应用程序
+    
+    - 代理：位于客户端和服务器中间的HTTP中间体。接收所有客户端HTTP请求，转发给服务器（可能对请求修改后转发）。对用户来说，这些程序就叫做代理，代表用户访问服务器。
+    
+    出于安全考虑，通常会将代理作为转发所有Web流量的可信任中间点使用。因为代理可以进行请求响应过滤。比如对响应的下载文件的病毒检测，或者对请求的一些视频网站过滤。
+    - 缓存：HTTP仓库，用于页面的副本保存在离客户端更近的地方。缓存也叫做代理缓存是一种特殊的HTTP代理服务器。可以将代理传送常用文档复制保存起来，下次请求统一文档的客户端就可以享受缓存的私有副本提供的服务。（服务器端缓存，浏览器缓存是另一种机制）
+    
+    客户端从附近的缓存下载文档会比远程web服务器下载快很多。HTTP定义了很多功能使缓存更搞笑，规范了文档的新鲜度和缓存内容隐私性。
+    
+    - 网关：连接其他应用的特殊Web服务器。是一种特殊服务器，作为其他服务器的中间实体使用。通常将HTTP协议转换成其他协议。网关接收请求就好像自己是源服务器一样，客户端并不知道自己正和一个网关通信。
+    
+    例如：一个HTTP/FTP网关会通过HTTP请求接收对FTP URI的请求，并通过FTP协议获得文档。然后封装成一条HTTP请求发送给客户端。
+    
+    - 隧道：“HTTP隧道技术”就是把所有要传送的数据全部封装到HTTP协议里进行传送。
+    
+    常常使用木马的用户一定对木马所使用的反弹连接技术、线程插入技术等耳熟能详，但是对“HTTP隧道技术”可能就不甚了解了，那到底什么是“HTTP隧道技术”呢？我们知道，使用了“反弹连接技术”的远程控件软件只能访问拨号上网的服务端以及局域网里通过NAT代理上网的服务端。
+    
+　　而使用“HTTP隧道技术”以后，远程控件软件可以访问到局域网里通过HTTP、SOCKS4/5代理上网的服务端。简单来说，“HTTP隧道技术”就是把所有要传送的数据全部封装到HTTP协议里进行传送。因此，在互联网上可以访问到局域网里通过HTTP、SOCKS4/5代理上网的电脑，而且也不会有什么防火墙会拦截。
+　　
+　　可以这么说，使用“HTTP隧道技术”的远程控制软件几乎支持了所有的上网方式，如：拨号上网、ADSL、Cable Modem、NAT透明代理、HTTP的GET型和CONNECT型代理、SOCKS4代理、SOCKS5代理等。
+　　
+　　通过使用反弹连接技术和HTTP隧道技术后，服务端程序的打开端口一般开为80（即用于网页浏览的端口）。这样稍微疏忽一点用户就会以为是自己在浏览网页，而防火墙也会同样这么认为，再加上反弹连接型木马的服务端主动连接客户端，这样就可以轻易突破防火墙的限制。
+    
+    - Agent：发送自动HTTP请求的Web客户端,终端层面代理。所有发布web请求的应用程序都是http agent代理。比如web浏览器，网络蜘蛛，网络爬虫，网络机器人等。
+    
+    
+    
+        
+    
+
