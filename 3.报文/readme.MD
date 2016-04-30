@@ -455,4 +455,14 @@ Expires	实体不再有效，要从原始的源端中再次获取该实体的日
 Last-Modified	实体最后一次被修改的日期和时间
 ```
 
+###7.5 其他首部
+
+
+```
+首部    描述
+Upgrade-Insecure-Requests 将遗留站点升级到HTTPS：Chrome 43将启用新的内容安全策略“升级不安全请求（upgrade-insecure-requests）”，即在启用升级非安全请求后，HTTP会被作为HTTPS对待。许多传统网站的页面可能包含了HTTP资源请求，在启用HTTPS后页面的HTTP请求仍然给中间人劫持和监听留下了空间。然而网站开发者无需担心，Chrome浏览器会自动帮你完成安全升级，有兴趣的开发者可以去参考Google给出的示例。类似的安全策略在2013年发布的Firefox 23及其以后版本均开始采用。
+
+X-(xxx) 扩展头部
+```
+
 
