@@ -2,18 +2,18 @@
 
 1. URL格式
 
-    <scheme>://<user>:<password>@<host>:<port>/<path>;<params>?<query>#<frag>
+    scheme://user:password@host:port/path;params?query#frag
 
-     名字:解释:默认值
-     方案:协议:默认无
-     用户:访问特定资源需要的用户名:匿名
-     密码:用户名对应密码:<E-mail>地址
-     主机:IP地址或者域名:无
-     端口:资源服务器监听端口号:每个方案特有(http是80)
-     路径:url路径可以分为若干段,每段都有特有组件:无
-     参数:某些方案用这个组件指定输入参数.与路径之间用;分隔,格式:参数名/值对
-     查询:传递参数来激活应用程序.没有固定格式,用?与url其他部分分隔
-     片段:一小片或者一部分资源名.不会传递给服务器,用#与url其他部分分隔
+-      名字:解释:默认值
+-      方案:协议:默认无
+-      用户:访问特定资源需要的用户名:匿名
+-      密码:用户名对应密码:<E-mail>地址
+-      主机:IP地址或者域名:无
+-      端口:资源服务器监听端口号:每个方案特有(http是80)
+-      路径:url路径可以分为若干段,每段都有特有组件:无
+-      参数:某些方案用这个组件指定输入参数.与路径之间用;分隔,格式:参数名/值对
+-      查询:传递参数来激活应用程序.没有固定格式,用?与url其他部分分隔
+-      片段:一小片或者一部分资源名.不会传递给服务器,用#与url其他部分分隔
 
      http://lihongji:123456@www.baidu.com:80/user/123/account/456;type=string?userage>30#hash=xx
 
@@ -21,7 +21,7 @@
 
     - 相对:是URL的片段,处理url应用程序(如浏览器)能在绝对与相对之间进行转换
 
-        - 基础URL:可能来自于几个部分
+    - 基础URL:可能来自于几个部分
         
         - 资源中显式提供:比如在html文档中可能包含一个定义基础url的html标记:<base>,通过它来转换html文档中所有相对url
         - 封装资源的URL:如果没有指定显示url.就一当前资源的url作为基础url
@@ -66,7 +66,7 @@
     
     - mailto：url指向e-mail地址。例如：mailto:aaa@bbb.com
     
-    - ftp:文件传输协议，url指向ftp服务器上，上载或者下载的文件。并且能获得服务器上目录结构与内容列表。早在web出现之前就已经存在。web应用程序把ftp作为一种数据访问方案使用。格式:ftp://<user>:<password>@<host>:<port>/<path>;<params>
+    - ftp:文件传输协议，url指向ftp服务器上，上载或者下载的文件。并且能获得服务器上目录结构与内容列表。早在web出现之前就已经存在。web应用程序把ftp作为一种数据访问方案使用。格式:ftp://user:password@host:port/path;params
     
     - rtsp,rtspu:(Real Time Streaming Protocol)实时传输流数据协议。rtspu中的u代表从udp协议获取资源。
     

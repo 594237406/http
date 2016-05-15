@@ -1,4 +1,11 @@
-var httpIncoming = require('_http_incoming');
+var http=require('http');
 
-console.log(httpIncoming);
 
+var server=http.createServer((req,res)=>{
+
+
+   res.end('end');
+});
+
+
+server.listen(3001);
