@@ -172,12 +172,19 @@
     但是,如果在大量连接处于打开状态的情况,或者处于等待状态的连接分配大量控制块的情况,会导致操作系统的速度大降.
 
 ##### 请求报文
-    具体请参考[]
+请参考[报文][3]
 ##### 服务器处理
+请参考[web服务器][4]
 ##### 响应报文
+请参考[报文][5]
 
 ### 浏览器渲染
+请参考[webkit技术内幕][6]
 
 
   [1]: 1.png
   [2]: 2.png
+  [3]: https://github.com/antgod/http/tree/master/3.%E6%8A%A5%E6%96%87
+  [4]: https://github.com/antgod/http/blob/master/5.%E6%9C%8D%E5%8A%A1%E5%99%A8/readmd.md
+  [5]: https://github.com/antgod/http/tree/master/3.%E6%8A%A5%E6%96%87
+  [6]: http://download.csdn.net/download/cometwo/9392697
